@@ -3,18 +3,23 @@ import CoinCard from "./components/Coincard";
 
 import { Container, Row, Col } from "reactstrap";
 
-import startWebSocket from "./components/binance-websocket"
+import startWebSocket from "./components/binance-websocket";
 
 import "./App.css";
 
 class App extends Component {
   constructor() {
     super();
-  }
 
-  state = {
-    coins: [{ id: "ETHBTC", price: 0 }]
-  };
+    this.state = {
+      coins: [
+        { id: "ETHBTC", price: 0 },
+        { id: "XLMBTC", price: 0 },
+        { id: "TUSDBTC", price: 0 },
+        { id: "BTCUSDT", price: 0 }
+      ]
+    };
+  }
 
   componentDidMount() {
     this.startWebSocket();
@@ -22,7 +27,8 @@ class App extends Component {
 
   startWebSocket() {
     this.ws = new WebSocket(
-      "wss://stream.binance.com:9443/ws/ethbtc@miniTicker"
+      //"wss://stream.binance.com:9443/ws/ethbtc@miniTicker" // single coin
+      "wss://stream.binance.com:9443/ws/ethbtc@miniTicker/xlmbtc@miniTicker/tusdbtc@miniTicker/btcusdt@miniTicker"
       //"wss://stream.binance.com:9443/ws/!miniTicker@arr"
     );
 
@@ -47,12 +53,13 @@ class App extends Component {
       const price = data.c;
       const coins = [...this.state.coins];
 
-      const coin = coins.find(c => c.id === coinName);
+      const coinIdx = coins.findIndex(c => c.id === coinName);
 
-      if (coin.price !== price) {
-        coin.price = price;
-        this.setState = { coins };
-        this.forceUpdate();
+      if (coins[coinIdx].price !== price) {
+        coins[coinIdx].price = price;
+        this.setState({ coins });
+        //console.log("update" + coins[coinIdx].id );
+        //this.forceUpdate();
       }
     };
   }
