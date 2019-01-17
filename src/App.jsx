@@ -1,28 +1,19 @@
 import React, { Component } from "react";
-import CoinCard from "./components/Coincard";
-
+//import CoinCard from "./components/Coincard";
+import CoinContainer from "./components/CoinContainer";
+import { binanceSocket } from "./actions";
 import { Container, Row, Col } from "reactstrap";
+import { connect } from "react-redux";
 
-import startWebSocket from "./components/binance-websocket";
+//import startWebSocket from "./components/binance-websocket";
 
 import "./App.css";
 
 class App extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      coins: [
-        { id: "ETHBTC", price: 0 },
-        { id: "XLMBTC", price: 0 },
-        { id: "TUSDBTC", price: 0 },
-        { id: "BTCUSDT", price: 0 }
-      ]
-    };
-  }
-
   componentDidMount() {
-    this.startWebSocket();
+    //this.setState(coins);
+    //this.startWebSocket();
+    this.props.onWebSocketStart();
   }
 
   startWebSocket() {
@@ -51,16 +42,15 @@ class App extends Component {
       //console.log("Coin" + coinName);
 
       const price = data.c;
-      const coins = [...this.state.coins];
+      //const coins = [...state];
+      //const coinIdx = coins.findIndex(c => c.id === coinName);
 
-      const coinIdx = coins.findIndex(c => c.id === coinName);
-
-      if (coins[coinIdx].price !== price) {
-        coins[coinIdx].price = price;
-        this.setState({ coins });
-        //console.log("update" + coins[coinIdx].id );
-        //this.forceUpdate();
-      }
+      //coins[coinIdx].price = price;
+      //this.setState({ coins });
+      console.log("update" + coinName);
+      //dispatch(updateCoin(coins[0]));
+      //this.forceUpdate();
+      //}
     };
   }
 
@@ -75,7 +65,8 @@ class App extends Component {
               </Row>
             </Container>
 
-            <CoinCard coins={this.state.coins} />
+            {/* <CoinCard coins={this.state.coins} />  */}
+            <CoinContainer />
 
             <Container />
           </React.Fragment>
@@ -85,4 +76,15 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state, props) => {
+  return {
+    coinList : state.coinList
+  };
+};
+
+const mapDispatchToProps = {
+  onWebSocketStart: binanceSocket
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
