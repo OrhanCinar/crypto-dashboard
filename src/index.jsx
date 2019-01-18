@@ -2,32 +2,32 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 
-//import * as serviceWorker from './serviceWorker';
-
+import { applyMiddleware, compose, createStore,combineReducers } from "redux";
 import { Provider } from "react-redux";
-import { applyMiddleware, compose, createStore, combineReducers } from "redux";
-import coinReducer from "./reducers/coinReducer";
-
 import thunk from "redux-thunk";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import { UPDATE_COIN,ADD_COIN } from "./actions";
-
-//import { updateCoin } from "./actions";
+import coinReducer from "./reducers/coinReducer";
 
 const initialState = {
   coinList: [
-    { id: "ETHBTC", price: 0 },
-    { id: "XLMBTC", price: 0 },
-    { id: "TUSDBTC", price: 0 },
-    { id: "BTCUSDT", price: 0 }
-  ]
+    // { id: "ETHBTC", price: 0 },
+    // { id: "XLMBTC", price: 0 },
+    // { id: "TUSDBTC", price: 0 },
+    // { id: "BTCUSDT", price: 0 }
+  ],
+  allCoins : [{
+    id : 1, name : 'Test'
+  }]
 };
 
 const rootReducers = combineReducers({
-  coinList: coinReducer
+  coinReducer : coinReducer
 });
+
+export default rootReducers;
+
 
 const allStoreEnhancers = compose(
   applyMiddleware(thunk),
@@ -37,13 +37,10 @@ const allStoreEnhancers = compose(
 const store = createStore(
   rootReducers,
   {
-    coinList: initialState
+    coinReducer: initialState
   },
   allStoreEnhancers
 );
-
-
-
 
 ReactDOM.render(
   <Provider store={store}>
@@ -51,19 +48,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
-
-console.log("State" + store.getState());
-
-const unsubscribe = store.subscribe(() =>
-  console.log("usc " + store.getState())
-);
-//var coins = [{ id: "ETHBTC", price: 1 }, { id: "XLMBTC", price: 2 }];
-//store.dispatch(updateCoin(coins[0]));
-//store.dispatch(updateCoin(coins[1]));
-
-unsubscribe();
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-//serviceWorker.unregister();
