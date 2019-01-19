@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 
-import { applyMiddleware, compose, createStore,combineReducers } from "redux";
+import { applyMiddleware, compose, createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
@@ -17,17 +17,50 @@ const initialState = {
     // { id: "TUSDBTC", price: 0 },
     // { id: "BTCUSDT", price: 0 }
   ],
-  allCoins : [{
-    id : 1, name : 'Test'
-  }]
+
+  lineChartData: {
+    labels: [],
+    datasets: [
+      {
+        type: "line",
+        label: "BTCUSDT",
+        borderColor: '#EC932F',
+        backgroundColor: '#EC932F',
+        pointBorderColor: '#EC932F',
+        pointBackgroundColor: '#EC932F',
+        pointHoverBackgroundColor: '#EC932F',
+        pointHoverBorderColor: '#EC932F',
+        fill: false,
+        borderWidth: "2",
+        lineTension: 0.45,
+        data: []
+      }
+    ]
+  },
+  lineChartOptions: {
+    responsive: true,
+    maintainAspectRatio: false,
+    tooltips: {
+      enabled: true
+    },
+    scales: {
+      xAxes: [
+        {
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 50
+          }
+        }
+      ]
+    }
+  }
 };
 
 const rootReducers = combineReducers({
-  coinReducer : coinReducer
+  coinReducer: coinReducer
 });
 
 export default rootReducers;
-
 
 const allStoreEnhancers = compose(
   applyMiddleware(thunk),

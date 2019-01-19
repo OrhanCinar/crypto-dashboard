@@ -1,15 +1,17 @@
 import React, { Component } from "react";
-import CoinContainer from "./components/CoinContainer";
-import  BinanceSocket  from "./actions";
 import { Container, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
+
+import CoinContainer from "./components/CoinContainer";
+import ChartContainer from "./components/ChartContainer";
+import BinanceSocket from "./actions";
 
 import "./App.css";
 
 class App extends Component {
   componentDidMount() {
-   // console.log('App' , this.props);
-    this.props.onWebSocketStart();    
+    // console.log('App' , this.props);
+    this.props.onWebSocketStart();
   }
 
   render() {
@@ -25,7 +27,7 @@ class App extends Component {
 
             {/* <CoinCard coins={this.state.coins} />  */}
             <CoinContainer />
-
+            <ChartContainer />
             <Container />
           </React.Fragment>
         }
@@ -35,8 +37,10 @@ class App extends Component {
 }
 
 const mapStateToProps = (state, props) => {
+  console.log('mapStateToProps',state);
   return {
-    coinList: state.coinList
+    coinList: state.coinList,
+    lineChartData: state.lineChartData
   };
 };
 
