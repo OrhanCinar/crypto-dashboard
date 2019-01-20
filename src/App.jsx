@@ -37,7 +37,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-  console.log('mapStateToProps',state);
+  //console.log('mapStateToProps',state);
   return {
     coinList: state.coinList,
     lineChartData: state.lineChartData

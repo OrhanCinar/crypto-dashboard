@@ -13,7 +13,7 @@ const BinanceSocket = state => {
   console.log("binance socket ", state);
 
   return dispatch => {
-    const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${KLINE}`);
+    const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${SYMBOL_TICKER}/${KLINE}`);
 
     ws.onopen = () => {
       console.log("opening");
@@ -32,11 +32,9 @@ const BinanceSocket = state => {
 
       if (data.e === "24hrMiniTicker") {
         const coinAction = parseMiniTicker(data);
-        dispatch(coinAction);
+        dispatch(coinAction);    
       } else if (data.e === "kline") {
-        const klineData = parseKLine(data);
-
-      
+        const klineData = parseKLine(data);      
         const klineAction = {
           type: UPDATE_K_LINE,
           payload: {
@@ -55,7 +53,7 @@ function parseMiniTicker(data) {
     for (let i = 0; i < data.length; i++) {
       const symbol = data[i];
       if (!symbol || !symbol.s.includes("BTC")) {
-        continue; // usine only BTC Market
+        continue; // using only BTC Market
       }
       //console.log(symbol);
 
@@ -95,7 +93,7 @@ function parseKLine(data) {
 }
 
 const mapStateToProps = (state, props) => {
-  console.log(state);
+  //console.log(state);
   return {
     coinList: state.coinReducer.coinList
   };

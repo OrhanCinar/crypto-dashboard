@@ -32,10 +32,14 @@ const initialState = {
         pointHoverBorderColor: '#EC932F',
         fill: false,
         borderWidth: "2",
-        lineTension: 0.45,
+        lineTension: 0.5,        
+        showLine: true,
         data: []
-      }
-    ]
+      }      
+    ],
+    animation: {
+      duration: 0, // general animation time
+  },
   },
   lineChartOptions: {
     responsive: true,
@@ -47,11 +51,14 @@ const initialState = {
       xAxes: [
         {
           ticks: {
-            autoSkip: true,
-            maxTicksLimit: 50
+            autoSkip: false,
+            maxTicksLimit: 100,                          
           }
         }
-      ]
+      ],
+      yAxes: [{
+        stacked: false
+    }]
     }
   }
 };

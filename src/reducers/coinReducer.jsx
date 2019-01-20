@@ -28,7 +28,8 @@ const coinReducer = (state = initialState, { type, payload }) => {
           new Date().toLocaleTimeString()
         )
       };
-      //console.log(state.lineChartData);
+     
+      //console.log('UPDATE_K_LINE', payload.kline.price);
       //console.log(newChartData);
       return {
         ...state,
