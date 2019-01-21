@@ -25,4 +25,6 @@ const mapStateToProps = (state, props) => {
     mapStateToProps,
     null
   )(ChartContainer);
+
+  //https://github.com/rrag/react-stockcharts
   

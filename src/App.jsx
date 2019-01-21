@@ -7,11 +7,14 @@ import ChartContainer from "./components/ChartContainer";
 import BinanceSocket from "./actions";
 
 import "./App.css";
+import { getDailyTicker, getExchangeInfo } from "./components/RestApi";
 
 class App extends Component {
   componentDidMount() {
     // console.log('App' , this.props);
     this.props.onWebSocketStart();
+    getDailyTicker();
+    getExchangeInfo();
   }
 
   render() {
@@ -28,7 +31,6 @@ class App extends Component {
             {/* <CoinCard coins={this.state.coins} />  */}
             <CoinContainer />
             <ChartContainer />
-            <Container />
           </React.Fragment>
         }
       </div>
