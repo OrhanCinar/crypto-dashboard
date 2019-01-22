@@ -1,4 +1,4 @@
-import { UPDATE_COIN, ADD_COIN, UPDATE_K_LINE } from "../actions";
+import { UPDATE_COIN, UPDATE_K_LINE } from "../actions";
 
 const initialState = {
   coinList: []
@@ -28,12 +28,12 @@ const coinReducer = (state = initialState, { type, payload }) => {
           new Date().toLocaleTimeString()
         )
       };
-     
+
       //console.log('UPDATE_K_LINE', payload.kline.price);
       //console.log(newChartData);
       return {
         ...state,
-        lineChartData: {...state.lineChartData, newChartData}
+        lineChartData: { ...state.lineChartData, newChartData }
       };
 
     case UPDATE_COIN:

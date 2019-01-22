@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import CoinCard from "./Coincard";
-import { Container, Row, Col, ListGroup } from "reactstrap";
+import { Container, Row, ListGroup } from "reactstrap";
 
 const CoinList = state => {
   //console.log(state);

@@ -1,19 +1,19 @@
-import { connect } from "react-redux";
-
 //Action Types
 export const UPDATE_COIN = "UPDATE_COIN";
 export const ADD_COIN = "ADD_COIN";
 export const UPDATE_K_LINE = "UPDATE_K_LINE";
 
 const BinanceSocket = state => {
-  const ALL_MARKET_TICKER = "!miniTicker@arr";
+  //  const ALL_MARKET_TICKER = "!miniTicker@arr";
   const SYMBOL_TICKER = "btcusdt@miniTicker";
   const KLINE = "btcusdt@kline_1m";
 
   console.log("binance socket ", state);
 
   return dispatch => {
-    const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${SYMBOL_TICKER}/${KLINE}`);
+    const ws = new WebSocket(
+      `wss://stream.binance.com:9443/ws/${SYMBOL_TICKER}/${KLINE}`
+    );
 
     ws.onopen = () => {
       console.log("opening");
@@ -32,9 +32,9 @@ const BinanceSocket = state => {
 
       if (data.e === "24hrMiniTicker") {
         const coinAction = parseMiniTicker(data);
-        dispatch(coinAction);    
+        dispatch(coinAction);
       } else if (data.e === "kline") {
-        const klineData = parseKLine(data);      
+        const klineData = parseKLine(data);
         const klineAction = {
           type: UPDATE_K_LINE,
           payload: {
@@ -85,18 +85,18 @@ function parseMiniTicker(data) {
 }
 
 function parseKLine(data) {
-  const openPrice = data.k.o;
+  //const openPrice = data.k.o;
   const closePrice = data.k.c;
-  const symbolName = data.k.s;
+  //const symbolName = data.k.s;
   //console.log(symbolName, openPrice, closePrice);
   return closePrice;
 }
 
-const mapStateToProps = (state, props) => {
-  //console.log(state);
-  return {
-    coinList: state.coinReducer.coinList
-  };
-};
+// const mapStateToProps = (state, props) => {
+//   //console.log(state);
+//   return {
+//     coinList: state.coinReducer.coinList
+//   };
+// };
 
 export default BinanceSocket;
