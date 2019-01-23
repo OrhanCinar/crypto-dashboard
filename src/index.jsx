@@ -24,26 +24,26 @@ const initialState = {
       {
         type: "line",
         label: "BTCUSDT",
-        borderColor: '#EC932F',
-        backgroundColor: '#EC932F',
-        pointBorderColor: '#EC932F',
-        pointBackgroundColor: '#EC932F',
-        pointHoverBackgroundColor: '#EC932F',
-        pointHoverBorderColor: '#EC932F',
+        borderColor: "#EC932F",
+        backgroundColor: "#EC932F",
+        pointBorderColor: "#EC932F",
+        pointBackgroundColor: "#EC932F",
+        pointHoverBackgroundColor: "#EC932F",
+        pointHoverBorderColor: "#EC932F",
         fill: false,
         borderWidth: "2",
-        lineTension: 0.5,        
+        lineTension: 0.5,
         showLine: true,
         data: []
-      }      
-    ],
-    animation: {
-      duration: 0, // general animation time
+      }
+    ]
   },
+  animation: {
+    duration: 0 // general animation time
   },
   lineChartOptions: {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
     tooltips: {
       enabled: true
     },
@@ -51,14 +51,11 @@ const initialState = {
       xAxes: [
         {
           ticks: {
-            autoSkip: false,
-            maxTicksLimit: 100,                          
+            autoSkip: true,
+            maxTicksLimit: 10
           }
         }
-      ],
-      yAxes: [{
-        stacked: false
-    }]
+      ]
     }
   }
 };

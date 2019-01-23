@@ -3,11 +3,16 @@ import { Line } from "react-chartjs-2";
 import { Container } from "reactstrap";
 import { connect } from "react-redux";
 
+const chartcontainer = {
+  height: 400
+};
 const ChartContainer = state => {
   return (
-    <Container>
-      <Line data={state.lineChartData} options={state.lineChartOptions} />
-    </Container>
+    <div className={chartcontainer}>
+      <Container>
+        <Line data={state.lineChartData} options={state.lineChartOptions} />
+      </Container>
+    </div>
   );
 };
 

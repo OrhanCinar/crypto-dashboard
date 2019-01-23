@@ -19,18 +19,18 @@ const coinReducer = (state = initialState, { type, payload }) => {
 
       const oldBtcDataSet = state.lineChartData.datasets[0];
       const newBtcDataSet = { ...oldBtcDataSet };
-      newBtcDataSet.data.push(payload.kline.price);
+      newBtcDataSet.data.push(parseFloat(payload.kline.price));
 
       const newChartData = {
         ...state.lineChartData,
         datasets: [newBtcDataSet],
         labels: state.lineChartData.labels.concat(
-          new Date().toLocaleTimeString()
+          Math.round(new Date().getTime() / 1000)
         )
       };
 
       //console.log('UPDATE_K_LINE', payload.kline.price);
-      //console.log(newChartData);
+      console.log(Math.round(new Date().getTime() / 1000));
       return {
         ...state,
         lineChartData: { ...state.lineChartData, newChartData }
