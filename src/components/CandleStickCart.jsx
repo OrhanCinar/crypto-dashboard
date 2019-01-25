@@ -1,7 +1,11 @@
 import React from "react";
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
+import { utcDay } from "d3-time";
+import { scaleTime } from "d3-scale";
 
+import { connect } from "react-redux";
+import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 import { ChartCanvas, Chart } from "react-stockcharts";
 import {
   BarSeries,
@@ -27,40 +31,51 @@ import {
   MACDTooltip
 } from "react-stockcharts/lib/tooltip";
 
-class CandleStickCart extends React.Component {
-  render() {
-    const { type, data: initialData, width, ratio } = this.props;
-    const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(
-      d => d.date
-    );
-    const calculatedData = initialData;
-    const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(
-      calculatedData
-    );
+const CandleStickCart = state => {
+  //const { type, data: initialData, width, ratio } = this.props;
 
-    return (
-      <ChartCanvas
-        height={600}
-        width={width}
-        ratio={ratio}
-        margin={{ left: 70, right: 70, top: 20, bottom: 30 }}
-        type={type}
-        seriesName="BTCUSDT"
-        data={data}
-        xScale={xScale}
-        xAccessor={xAccessor}
-        displayXAccessor={displayXAccessor}
-      >
-        <XAxis
-          axisAt="bottom"
-          orient="bottom"
-          showTicks={false}
-          outerTickSize={0}
-        />
-        <YAxis axisAt="right" orient="right" ticks={5} />
+  const width = 600;
+  const ratio = 2;
+  const type = "hybrid";
+  const data = state.candleStickData;
 
-        <OHLCTooltip origin={[-40, 0]} />
-      </ChartCanvas>
-    );
-  }
-}
+  // const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(
+  //   calculatedData
+  // );
+
+  const xAccessor = d => d.date;
+  const xExtents = [xAccessor(last(data)), xAccessor(data[data.length - 100])];
+
+  console.log("d", xAccessor);
+  return (
+    <ChartCanvas>
+      ratio={ratio}
+      width={width}
+      margin={{ left: 50, right: 50, top: 10, bottom: 30 }}
+      type={type}
+      seriesName="MSFT" data={data}
+      {/* xAccessor={xAccessor} */}
+      xScale={scaleTime()}
+      {/* xExtents={xExtents}> */}
+      <Chart id={1} yExtents={d => [d.high, d.low]}>
+        <XAxis axisAt="bottom" orient="bottom" ticks={6} />
+        <YAxis axisAt="left" orient="left" ticks={5} />
+        <CandlestickSeries width={timeIntervalBarWidth(utcDay)} />
+      </Chart>
+    </ChartCanvas>
+  );
+};
+
+//export default CandleStickCart;
+
+const mapStateToProps = (state, props) => {
+  //console.log(state);
+  return {
+    candleStickData: state.coinReducer.candleStickData
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(CandleStickCart);

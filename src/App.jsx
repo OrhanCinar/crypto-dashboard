@@ -8,6 +8,8 @@ import BinanceSocket from "./actions";
 
 import "./App.css";
 import { getDailyTicker, getExchangeInfo } from "./components/RestApi";
+import CandleStickCart from "./components/CandleStickCart";
+import { TypeChooser } from "react-stockcharts/lib/helper";
 
 class App extends Component {
   componentDidMount() {
@@ -30,7 +32,9 @@ class App extends Component {
 
             {/* <CoinCard coins={this.state.coins} />  */}
             <CoinContainer />
-            <ChartContainer />
+            {/* <TypeChooser>{type => <ChartContainer type={type} />}</TypeChooser> */}
+
+            <CandleStickCart />
           </React.Fragment>
         }
       </div>
@@ -42,7 +46,8 @@ const mapStateToProps = (state, props) => {
   //console.log('mapStateToProps',state);
   return {
     coinList: state.coinList,
-    lineChartData: state.lineChartData
+    lineChartData: state.lineChartData,
+    candleStickData: state.candleStickData
   };
 };
 

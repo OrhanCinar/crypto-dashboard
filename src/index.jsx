@@ -57,7 +57,17 @@ const initialState = {
         }
       ]
     }
-  }
+  },
+  candleStickData: [
+    {
+      date: new Date(),
+      open: 6,
+      high: 9,
+      low: 8,
+      close: 8,
+      volume: 100
+    }
+  ]
 };
 
 const rootReducers = combineReducers({

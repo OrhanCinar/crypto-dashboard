@@ -99,4 +99,17 @@ function parseKLine(data) {
 //   };
 // };
 
+function parseData(parse) {
+  return function(d) {
+    d.date = parse(d.date);
+    d.open = +d.open;
+    d.high = +d.high;
+    d.low = +d.low;
+    d.close = +d.close;
+    d.volume = +d.volume;
+
+    return d;
+  };
+}
+
 export default BinanceSocket;
