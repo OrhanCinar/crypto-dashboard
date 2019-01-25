@@ -1,5 +1,7 @@
 import React from "react";
+// eslint-disable-next-line
 import { format } from "d3-format";
+// eslint-disable-next-line
 import { timeFormat } from "d3-time-format";
 import { utcDay } from "d3-time";
 import { scaleTime } from "d3-scale";
@@ -7,27 +9,41 @@ import { scaleTime } from "d3-scale";
 import { connect } from "react-redux";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 import { ChartCanvas, Chart } from "react-stockcharts";
+
 import {
+  // eslint-disable-next-line
   BarSeries,
+  // eslint-disable-next-line
   AreaSeries,
+  // eslint-disable-next-line
   CandlestickSeries,
+  // eslint-disable-next-line
   LineSeries,
+  // eslint-disable-next-line
   MACDSeries
 } from "react-stockcharts/lib/series";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import {
+  // eslint-disable-next-line
   CrossHairCursor,
+  // eslint-disable-next-line
   EdgeIndicator,
+  // eslint-disable-next-line
   CurrentCoordinate,
+  // eslint-disable-next-line
   MouseCoordinateX,
+  // eslint-disable-next-line
   MouseCoordinateY
 } from "react-stockcharts/lib/coordinates";
-
+// eslint-disable-next-line
 import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
 
 import {
+  // eslint-disable-next-line
   OHLCTooltip,
+  // eslint-disable-next-line
   MovingAverageTooltip,
+  // eslint-disable-next-line
   MACDTooltip
 } from "react-stockcharts/lib/tooltip";
 
@@ -44,9 +60,10 @@ const CandleStickCart = state => {
   // );
 
   const xAccessor = d => d.date;
+  // eslint-disable-next-line
   const xExtents = [xAccessor(last(data)), xAccessor(data[data.length - 100])];
 
-  console.log("d", xAccessor);
+  //console.log("d", xAccessor);
   return (
     <ChartCanvas>
       ratio={ratio}

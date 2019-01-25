@@ -30,18 +30,14 @@ const BinanceSocket = state => {
     ws.onmessage = e => {
       const data = JSON.parse(e.data);
 
-      if (data.e === "24hrMiniTicker") {
-        const coinAction = parseMiniTicker(data);
-        dispatch(coinAction);
-      } else if (data.e === "kline") {
-        const klineData = parseKLine(data);
-        const klineAction = {
-          type: UPDATE_K_LINE,
-          payload: {
-            kline: { id: data.s, price: klineData }
-          }
-        };
-        dispatch(klineAction);
+      switch (data.e) {
+        case "24hrMiniTicker":
+          dispatch(parseMiniTicker(data));
+          break;
+        case "kline":
+          dispatch(parseKLine(data));
+          break;
+        default:
       }
     };
   };
@@ -85,11 +81,20 @@ function parseMiniTicker(data) {
 }
 
 function parseKLine(data) {
-  //const openPrice = data.k.o;
-  const closePrice = data.k.c;
-  //const symbolName = data.k.s;
-  //console.log(symbolName, openPrice, closePrice);
-  return closePrice;
+  //console.log(data);
+  const klineData = {
+    closePrice: data.c,
+    openPrice: data.o,
+    symbolName: data.s
+  };
+  const klineAction = {
+    type: UPDATE_K_LINE,
+    payload: {
+      kline: { id: data.s, price: klineData }
+    }
+  };
+
+  return klineAction;
 }
 
 // const mapStateToProps = (state, props) => {
@@ -98,18 +103,4 @@ function parseKLine(data) {
 //     coinList: state.coinReducer.coinList
 //   };
 // };
-
-function parseData(parse) {
-  return function(d) {
-    d.date = parse(d.date);
-    d.open = +d.open;
-    d.high = +d.high;
-    d.low = +d.low;
-    d.close = +d.close;
-    d.volume = +d.volume;
-
-    return d;
-  };
-}
-
 export default BinanceSocket;

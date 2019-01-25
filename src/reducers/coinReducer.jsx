@@ -30,7 +30,7 @@ const coinReducer = (state = initialState, { type, payload }) => {
       };
 
       //console.log('UPDATE_K_LINE', payload.kline.price);
-      console.log(Math.round(new Date().getTime() / 1000));
+      //console.log(Math.round(new Date().getTime() / 1000));
       return {
         ...state,
         lineChartData: { ...state.lineChartData, newChartData }

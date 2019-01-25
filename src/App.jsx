@@ -3,20 +3,30 @@ import { Container, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 
 import CoinContainer from "./components/CoinContainer";
+// eslint-disable-next-line
 import ChartContainer from "./components/ChartContainer";
 import BinanceSocket from "./actions";
 
 import "./App.css";
-import { getDailyTicker, getExchangeInfo } from "./components/RestApi";
+import {
+  // eslint-disable-next-line
+  getDailyTicker,
+  // eslint-disable-next-line
+  getExchangeInfo,
+  getKLine
+} from "./components/RestApi";
+// eslint-disable-next-line
 import CandleStickCart from "./components/CandleStickCart";
+// eslint-disable-next-line
 import { TypeChooser } from "react-stockcharts/lib/helper";
 
 class App extends Component {
   componentDidMount() {
     // console.log('App' , this.props);
     this.props.onWebSocketStart();
-    getDailyTicker();
-    getExchangeInfo();
+    //getDailyTicker();
+    //getExchangeInfo();
+    getKLine();
   }
 
   render() {
@@ -33,8 +43,6 @@ class App extends Component {
             {/* <CoinCard coins={this.state.coins} />  */}
             <CoinContainer />
             {/* <TypeChooser>{type => <ChartContainer type={type} />}</TypeChooser> */}
-
-            <CandleStickCart />
           </React.Fragment>
         }
       </div>
