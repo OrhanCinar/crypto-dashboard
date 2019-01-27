@@ -8,12 +8,11 @@ import ChartContainer from "./components/ChartContainer";
 import BinanceSocket from "./actions";
 
 import "./App.css";
-import {
+import GetKLine, {
   // eslint-disable-next-line
   getDailyTicker,
   // eslint-disable-next-line
-  getExchangeInfo,
-  getKLine
+  getExchangeInfo
 } from "./components/RestApi";
 // eslint-disable-next-line
 import CandleStickCart from "./components/CandleStickCart";
@@ -26,7 +25,7 @@ class App extends Component {
     this.props.onWebSocketStart();
     //getDailyTicker();
     //getExchangeInfo();
-    getKLine();
+    this.props.onKlineAPI();
   }
 
   render() {
@@ -42,7 +41,7 @@ class App extends Component {
 
             {/* <CoinCard coins={this.state.coins} />  */}
             <CoinContainer />
-            {/* <TypeChooser>{type => <ChartContainer type={type} />}</TypeChooser> */}
+            {/* <CandleStickCart /> */}
           </React.Fragment>
         }
       </div>
@@ -60,7 +59,8 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = {
-  onWebSocketStart: BinanceSocket
+  onWebSocketStart: BinanceSocket,
+  onKlineAPI: GetKLine
 };
 
 export default connect(

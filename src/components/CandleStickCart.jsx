@@ -48,18 +48,20 @@ import {
 } from "react-stockcharts/lib/tooltip";
 
 const CandleStickCart = state => {
-  //const { type, data: initialData, width, ratio } = this.props;
+  //const { type, width, ratio } = this.props;
 
   const width = 600;
   const ratio = 2;
   const type = "hybrid";
   const data = state.candleStickData;
-
+  if (data.length === 0) {
+    return <div>Loading...</div>;
+  }
   // const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(
   //   calculatedData
   // );
-
-  const xAccessor = d => d.date;
+  console.log("Loading");
+  const xAccessor = d => d.openTime;
   // eslint-disable-next-line
   const xExtents = [xAccessor(last(data)), xAccessor(data[data.length - 100])];
 
@@ -70,10 +72,10 @@ const CandleStickCart = state => {
       width={width}
       margin={{ left: 50, right: 50, top: 10, bottom: 30 }}
       type={type}
-      seriesName="MSFT" data={data}
-      {/* xAccessor={xAccessor} */}
+      seriesName="BTCUSDT" data={data}
+      xAccessor={xAccessor}
       xScale={scaleTime()}
-      {/* xExtents={xExtents}> */}
+      xExtents={xExtents}>
       <Chart id={1} yExtents={d => [d.high, d.low]}>
         <XAxis axisAt="bottom" orient="bottom" ticks={6} />
         <YAxis axisAt="left" orient="left" ticks={5} />
@@ -86,7 +88,7 @@ const CandleStickCart = state => {
 //export default CandleStickCart;
 
 const mapStateToProps = (state, props) => {
-  //console.log(state);
+  //console.log("CandleStickCart", state.coinReducer.candleStickData);
   return {
     candleStickData: state.coinReducer.candleStickData
   };

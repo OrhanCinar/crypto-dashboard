@@ -1,7 +1,10 @@
+import { throttle } from "lodash";
+
 //Action Types
 export const UPDATE_COIN = "UPDATE_COIN";
 export const ADD_COIN = "ADD_COIN";
 export const UPDATE_K_LINE = "UPDATE_K_LINE";
+export const ADD_K_LINE = "ADD_K_LINE";
 
 const BinanceSocket = state => {
   //  const ALL_MARKET_TICKER = "!miniTicker@arr";
@@ -12,7 +15,7 @@ const BinanceSocket = state => {
 
   return dispatch => {
     const ws = new WebSocket(
-      `wss://stream.binance.com:9443/ws/${SYMBOL_TICKER}/${KLINE}`
+      `wss://stream.binance.com:9443/ws/${SYMBOL_TICKER}`
     );
 
     ws.onopen = () => {

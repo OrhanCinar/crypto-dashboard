@@ -1,4 +1,4 @@
-import { UPDATE_COIN, UPDATE_K_LINE } from "../actions";
+import { UPDATE_COIN, UPDATE_K_LINE, ADD_K_LINE } from "../actions";
 
 const initialState = {
   coinList: []
@@ -13,6 +13,11 @@ const coinReducer = (state = initialState, { type, payload }) => {
     //     coinList: [...state.coinList, payload.coin],
     //     action: type
     //   };
+    case ADD_K_LINE:
+      return {
+        ...state,
+        candleStickData: payload.candleStickData
+      };
     case UPDATE_K_LINE:
       // const { price } = payload.kline;
       // console.log(payload.kline);

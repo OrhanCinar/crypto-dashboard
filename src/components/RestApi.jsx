@@ -1,3 +1,7 @@
+import { connect } from "react-redux";
+
+import { ADD_K_LINE } from "../actions";
+
 const BASE_URL = "https://api.binance.com";
 const API_VERSION_URL = "/api/v1/";
 const EXCHANGE_URL = "/exchangeInfo";
@@ -28,24 +32,35 @@ export function getExchangeInfo() {
     });
 }
 
-export function getKLine() {
-  fetch(`${GET_BASE_URL}/${KLINE_URL}?symbol=BTCUSDT&interval=1h`)
-    .then(res => res.json())
-    .then(res => {
-      console.log("getKLine > res > ", res);
-      var parsedData = [];
+const GetKLine = state => {
+  return dispatch => {
+    fetch(`${GET_BASE_URL}/${KLINE_URL}?symbol=BTCUSDT&interval=1h`)
+      .then(res => res.json())
+      .then(res => {
+        console.log("getKLine > res > ", res);
+        var parsedData = [];
 
-      for (var i = 0; i < res.length; i++) {
-        var p = parseKLine(res[i]);
-        parsedData.push(p);
-      }
+        for (var i = 0; i < res.length; i++) {
+          var p = parseKLine(res[i]);
+          parsedData.push(p);
+        }
 
-      console.log("parsedData", parsedData);
-    })
-    .catch(err => {
-      console.log("getKLine err > ", err);
-    });
-}
+        const klineAction = {
+          type: ADD_K_LINE,
+          payload: {
+            candleStickData: parsedData
+          }
+        };
+
+        dispatch(klineAction);
+
+        console.log("parsedData", parsedData);
+      })
+      .catch(err => {
+        console.log("getKLine err > ", err);
+      });
+  };
+};
 
 function parseKLine(data) {
   var d = {
@@ -73,3 +88,5 @@ function parseKLine(data) {
   ]
 ]
 */
+
+export default GetKLine;
