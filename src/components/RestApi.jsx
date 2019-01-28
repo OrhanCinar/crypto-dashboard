@@ -44,7 +44,7 @@ const GetKLine = state => {
           var p = parseKLine(res[i]);
           parsedData.push(p);
         }
-
+        parsedData = parsedData.reverse();
         const klineAction = {
           type: ADD_K_LINE,
           payload: {
@@ -70,7 +70,7 @@ function parseKLine(data) {
     low: data[3],
     close: data[4],
     volume: data[5],
-    closeTİme: new Date(data[6]) // unix milisecond
+    closeTime: new Date(data[6]) // unix milisecond
   };
   return d;
 }

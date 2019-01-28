@@ -25,7 +25,7 @@ class App extends Component {
     this.props.onWebSocketStart();
     //getDailyTicker();
     //getExchangeInfo();
-    this.props.onKlineAPI();
+    this.props.onKLineAPI();
   }
 
   render() {
@@ -38,10 +38,9 @@ class App extends Component {
                 <Col>TOP</Col>
               </Row>
             </Container>
-
             {/* <CoinCard coins={this.state.coins} />  */}
             <CoinContainer />
-            {/* <CandleStickCart /> */}
+            if (state.candleStickData.length > 0) {<CandleStickCart />}
           </React.Fragment>
         }
       </div>
@@ -60,7 +59,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = {
   onWebSocketStart: BinanceSocket,
-  onKlineAPI: GetKLine
+  onKLineAPI: GetKLine
 };
 
 export default connect(

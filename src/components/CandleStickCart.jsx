@@ -5,7 +5,7 @@ import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
 import { utcDay } from "d3-time";
 import { scaleTime } from "d3-scale";
-
+//import * as d3 from "d3";
 import { connect } from "react-redux";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 import { ChartCanvas, Chart } from "react-stockcharts";
@@ -50,32 +50,47 @@ import {
 const CandleStickCart = state => {
   //const { type, width, ratio } = this.props;
 
-  const width = 600;
-  const ratio = 2;
-  const type = "hybrid";
-  const data = state.candleStickData;
-  if (data.length === 0) {
+  const calculatedData = state.candleStickData || [];
+  if (calculatedData.length === 0) {
     return <div>Loading...</div>;
   }
   // const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(
   //   calculatedData
   // );
-  console.log("Loading");
+
   const xAccessor = d => d.openTime;
   // eslint-disable-next-line
-  const xExtents = [xAccessor(last(data)), xAccessor(data[data.length - 100])];
+  // const xExtents = [
+  //   xAccessor(last(calculatedData)),
+  //   xAccessor(calculatedData[calculatedData.length - 100])
+  // ];
+  const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(
+    d => d.openTime
+  );
 
-  //console.log("d", xAccessor);
+  const { data, xScale, displayXAccessor } = xScaleProvider(calculatedData);
+
+  // var xScale = d3.scaleTime()
+  // .domain([minDate, maxDate])
+  // .range([0,w]);//an array here
+
+  console.log("Loading", xScale);
+
+  const width = 600;
+  const ratio = 1;
+  const type = "hybrid";
+
   return (
     <ChartCanvas>
+      height={400}
       ratio={ratio}
       width={width}
       margin={{ left: 50, right: 50, top: 10, bottom: 30 }}
       type={type}
       seriesName="BTCUSDT" data={data}
       xAccessor={xAccessor}
-      xScale={scaleTime()}
-      xExtents={xExtents}>
+      displayXAccessor={displayXAccessor}
+      xScale={xScale}
       <Chart id={1} yExtents={d => [d.high, d.low]}>
         <XAxis axisAt="bottom" orient="bottom" ticks={6} />
         <YAxis axisAt="left" orient="left" ticks={5} />
