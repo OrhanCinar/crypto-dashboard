@@ -1,5 +1,4 @@
-import { connect } from "react-redux";
-
+import { timeParse } from "d3-time-format";
 import { ADD_K_LINE } from "../actions";
 
 const BASE_URL = "https://api.binance.com";
@@ -34,17 +33,17 @@ export function getExchangeInfo() {
 
 const GetKLine = state => {
   return dispatch => {
-    fetch(`${GET_BASE_URL}/${KLINE_URL}?symbol=BTCUSDT&interval=1h`)
+    fetch(`${GET_BASE_URL}/${KLINE_URL}?symbol=BTCUSDT&interval=1h&limit=500`)
       .then(res => res.json())
       .then(res => {
-        console.log("getKLine > res > ", res);
+        //console.log("getKLine > res > ", res);
         var parsedData = [];
 
         for (var i = 0; i < res.length; i++) {
           var p = parseKLine(res[i]);
           parsedData.push(p);
         }
-        parsedData = parsedData.reverse();
+        //parsedData = parsedData.reverse();
         const klineAction = {
           type: ADD_K_LINE,
           payload: {
@@ -54,13 +53,15 @@ const GetKLine = state => {
 
         dispatch(klineAction);
 
-        console.log("parsedData", parsedData);
+        console.log("parsedData", parsedData.length);
       })
       .catch(err => {
         console.log("getKLine err > ", err);
       });
   };
 };
+
+const parseDate = timeParse("%Y-%m-%d");
 
 function parseKLine(data) {
   var d = {
@@ -70,7 +71,7 @@ function parseKLine(data) {
     low: data[3],
     close: data[4],
     volume: data[5],
-    closeTime: new Date(data[6]) // unix milisecond
+    closeTime: parseDate(new Date(data[6])) // unix milisecond,
   };
   return d;
 }

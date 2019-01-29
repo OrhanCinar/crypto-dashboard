@@ -7,11 +7,11 @@ const CoinList = state => {
   //console.log(state);
   return (
     <Container>
-      {
+      {/* {
         <Row>
           <h2>Count : {state.coinList.length}</h2>
         </Row>
-      }
+      } */}
 
       {
         <Row>

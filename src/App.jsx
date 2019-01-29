@@ -3,21 +3,16 @@ import { Container, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 
 import CoinContainer from "./components/CoinContainer";
-// eslint-disable-next-line
-import ChartContainer from "./components/ChartContainer";
+
 import BinanceSocket from "./actions";
 
 import "./App.css";
 import GetKLine, {
-  // eslint-disable-next-line
   getDailyTicker,
-  // eslint-disable-next-line
   getExchangeInfo
 } from "./components/RestApi";
-// eslint-disable-next-line
-import CandleStickCart from "./components/CandleStickCart";
-// eslint-disable-next-line
-import { TypeChooser } from "react-stockcharts/lib/helper";
+
+import MyCandleStickChart from "./components/MyCandleStickChart";
 
 class App extends Component {
   componentDidMount() {
@@ -35,12 +30,17 @@ class App extends Component {
           <React.Fragment>
             <Container>
               <Row>
-                <Col>TOP</Col>
+                <Col>
+                  <CoinContainer />
+                </Col>
               </Row>
             </Container>
             {/* <CoinCard coins={this.state.coins} />  */}
-            <CoinContainer />
-            if (state.candleStickData.length > 0) {<CandleStickCart />}
+
+            {/* {this.props.candleStickData &&
+              this.props.candleStickData.length > 0 && <CandleStickCart />} */}
+            {/* <CandleStickCart /> */}
+            <MyCandleStickChart />
           </React.Fragment>
         }
       </div>

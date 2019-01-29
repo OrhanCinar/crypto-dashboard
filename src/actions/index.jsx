@@ -1,5 +1,3 @@
-import { throttle } from "lodash";
-
 //Action Types
 export const UPDATE_COIN = "UPDATE_COIN";
 export const ADD_COIN = "ADD_COIN";
@@ -9,7 +7,7 @@ export const ADD_K_LINE = "ADD_K_LINE";
 const BinanceSocket = state => {
   //  const ALL_MARKET_TICKER = "!miniTicker@arr";
   const SYMBOL_TICKER = "btcusdt@miniTicker";
-  const KLINE = "btcusdt@kline_1m";
+  //const KLINE = "btcusdt@kline_1m";
 
   console.log("binance socket ", state);
 
