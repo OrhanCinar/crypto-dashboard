@@ -12,9 +12,9 @@ const BinanceSocket = state => {
   console.log("binance socket ", state);
 
   return dispatch => {
-    const ws = new WebSocket(
-      `wss://stream.binance.com:9443/ws/${SYMBOL_TICKER}`
-    );
+    const endPoints = getCoinEndPoints();
+    console.log(endPoints);
+    const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${endPoints}`);
 
     ws.onopen = () => {
       console.log("opening");
@@ -43,6 +43,26 @@ const BinanceSocket = state => {
     };
   };
 };
+
+const arrCoin = [
+  "btcusdt",
+  "ethbtc",
+  "xlmbtc",
+  "adabtc",
+  "bnbbtc",
+  "tusdbtc",
+  "ethtusd"
+];
+
+function getCoinEndPoints() {
+  let endPoint = "";
+
+  for (var item in arrCoin) {
+    endPoint += `${arrCoin[item]}@miniTicker/`;
+  }
+
+  return endPoint;
+}
 
 function parseMiniTicker(data) {
   //multiple coins
