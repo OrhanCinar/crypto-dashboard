@@ -71,7 +71,7 @@ function parseKLine(data) {
     low: data[3],
     close: data[4],
     volume: data[5],
-    closeTime: parseDate(new Date(data[6])) // unix milisecond,
+    closeTime: new Date(data[6]) // unix milisecond,
   };
   return d;
 }

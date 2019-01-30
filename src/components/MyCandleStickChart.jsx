@@ -69,7 +69,7 @@ class CandleStickChart extends React.Component {
     const ratio = 1;
     const type = "hybrid";
 
-    console.log("xExtents", xExtents);
+    //console.log("xExtents", xExtents);
 
     const ema20 = ema()
       .options({
@@ -85,10 +85,10 @@ class CandleStickChart extends React.Component {
 
     return (
       <ChartCanvas
-        height={400}
+        height={800}
         ratio={ratio}
         width={width}
-        margin={{ left: 70, right: 70, top: 10, bottom: 30 }}
+        margin={{ left: 120, right: 10, top: 10, bottom: 30 }}
         type={type}
         seriesName="BTC"
         data={calculatedData}

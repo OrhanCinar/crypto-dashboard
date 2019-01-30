@@ -44,6 +44,7 @@ const coinReducer = (state = initialState, { type, payload }) => {
     case UPDATE_COIN:
       const { id, price } = payload.coin;
 
+      //active btc market coins
       if (state.coinList.length < 135) {
         let coinExists = state.coinList.find(c => c.id === id);
 
@@ -56,10 +57,19 @@ const coinReducer = (state = initialState, { type, payload }) => {
           };
         }
       }
+
+      let coinExists = state.coinList.find(c => c.id === id);
+
       return {
         ...state,
         coinList: state.coinList.map(c =>
-          c.id === id ? { ...c, price: price } : c
+          c.id === id
+            ? {
+                ...c,
+                price: price,
+                priceChange: coinExists.price > price ? "down" : "up"
+              }
+            : c
         )
         //action: type
       };

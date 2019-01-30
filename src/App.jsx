@@ -28,10 +28,14 @@ class App extends Component {
       <div className="App">
         {
           <React.Fragment>
-            <Container>
+            <Container fluid={true}>
               <Row>
-                <Col>
+                <Col xs="1">
                   <CoinContainer />
+                </Col>
+
+                <Col xs="11">
+                  <MyCandleStickChart />
                 </Col>
               </Row>
             </Container>
@@ -40,7 +44,6 @@ class App extends Component {
             {/* {this.props.candleStickData &&
               this.props.candleStickData.length > 0 && <CandleStickCart />} */}
             {/* <CandleStickCart /> */}
-            <MyCandleStickChart />
           </React.Fragment>
         }
       </div>
