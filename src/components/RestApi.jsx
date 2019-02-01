@@ -34,11 +34,11 @@ export function getExchangeInfo() {
 const GetKLine = state => {
   return dispatch => {
     fetch(`${GET_BASE_URL}/${KLINE_URL}?symbol=BTCUSDT&interval=1h&limit=500`)
-      .then(res => res.json())
+      .then(validateResponse)
+      .then(readResponseAsJSON)
       .then(res => {
-        //console.log("getKLine > res > ", res);
         var parsedData = [];
-
+        console.log("parsedData", res);
         for (var i = 0; i < res.length; i++) {
           var p = parseKLine(res[i]);
           parsedData.push(p);
@@ -60,6 +60,21 @@ const GetKLine = state => {
       });
   };
 };
+
+function validateResponse(response) {
+  if (!response.ok) {
+    console.log(response);
+    throw Error("Throw", response);
+  }
+  console.log("validateResponse", response);
+  return response;
+}
+
+function readResponseAsJSON(response) {
+  const jsonResponse = response.json();
+  //console.log("readResponseAsJSON", jsonResponse);
+  return jsonResponse;
+}
 
 const parseDate = timeParse("%Y-%m-%d");
 
